@@ -13,7 +13,7 @@ In the above example, the argument "4" is the mode I am using to send the final 
 
 Honestly, the cherry on top in this is the fact that it gives you a date/time stamp of when the payload is sent at the very end, because we are pentesters and the report is what matters to the client, right???
 
-The complete process looked more like this:
+The complete process for attacking vulnserver with this tool looked more like this:
 
 # I sent a buffer of "TRUN ." + 3000 A's, resulting in a crash...
 ./exploitshadow.py 1 3000 10.0.0.10 9999
